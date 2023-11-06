@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import java.util.Collection;
 
 @Entity
-@Table(name = "client_company", schema = "sc_iceberg", catalog = "crm_clients_service")
+@Table(name = "client_company")
 public class ClientCompanyEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id

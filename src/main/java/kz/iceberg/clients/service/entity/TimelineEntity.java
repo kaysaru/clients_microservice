@@ -3,7 +3,7 @@ package kz.iceberg.clients.service.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "timeline", schema = "sc_iceberg", catalog = "crm_clients_service")
+@Table(name = "timeline")
 public class TimelineEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id

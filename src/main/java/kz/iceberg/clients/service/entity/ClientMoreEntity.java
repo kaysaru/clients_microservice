@@ -1,11 +1,13 @@
 package kz.iceberg.clients.service.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.Collection;
 
 @Entity
-@Table(name = "client_more", schema = "sc_iceberg", catalog = "crm_clients_service")
+@Table(name = "client_more")
 public class ClientMoreEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -21,14 +23,17 @@ public class ClientMoreEntity {
     @Column(name = "identifier", nullable = false, length = 60)
     private String identifier;
     @OneToMany(mappedBy = "clientMoreByClientMore")
+    @JsonManagedReference
     private Collection<ClientLabelEntity> clientLabelsById;
     @ManyToOne
     @JoinColumn(name = "company", referencedColumnName = "id")
     private ClientCompanyEntity clientCompanyByCompany;
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "client", referencedColumnName = "id")
+    @JsonBackReference
     private ClientEntity clientByClient;
     @OneToMany(mappedBy = "clientMoreByClientMore")
+    @JsonManagedReference
     private Collection<ClientTagEntity> clientTagsById;
 
     public long getId() {

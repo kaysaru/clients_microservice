@@ -1,9 +1,10 @@
 package kz.iceberg.clients.service.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "client_label", schema = "sc_iceberg", catalog = "crm_clients_service")
+@Table(name = "client_label")
 public class ClientLabelEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -20,6 +21,7 @@ public class ClientLabelEntity {
     private boolean ban;
     @ManyToOne
     @JoinColumn(name = "client_more", referencedColumnName = "id")
+    @JsonBackReference
     private ClientMoreEntity clientMoreByClientMore;
 
     public long getId() {

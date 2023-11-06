@@ -1,11 +1,12 @@
 package kz.iceberg.clients.service.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.Collection;
 
 @Entity
-@Table(name = "client", schema = "sc_iceberg", catalog = "crm_clients_service")
+@Table(name = "client")
 public class ClientEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -18,12 +19,16 @@ public class ClientEntity {
     @Column(name = "active", nullable = false)
     private boolean active;
     @OneToMany(mappedBy = "clientByClient")
+    @JsonManagedReference
     private Collection<ClientAddressesEntity> clientAddressesById;
     @OneToMany(mappedBy = "clientByClient")
+    @JsonManagedReference
     private Collection<ClientEmailsEntity> clientEmailsById;
+    @OneToOne(mappedBy = "clientByClient")
+    @JsonManagedReference
+    private ClientMoreEntity clientMoresById;
     @OneToMany(mappedBy = "clientByClient")
-    private Collection<ClientMoreEntity> clientMoresById;
-    @OneToMany(mappedBy = "clientByClient")
+    @JsonManagedReference
     private Collection<ClientPhonesEntity> clientPhonesById;
 
     public long getId() {
@@ -88,11 +93,11 @@ public class ClientEntity {
         this.clientEmailsById = clientEmailsById;
     }
 
-    public Collection<ClientMoreEntity> getClientMoresById() {
+    public ClientMoreEntity getClientMoresById() {
         return clientMoresById;
     }
 
-    public void setClientMoresById(Collection<ClientMoreEntity> clientMoresById) {
+    public void setClientMoresById(ClientMoreEntity clientMoresById) {
         this.clientMoresById = clientMoresById;
     }
 
