@@ -47,6 +47,12 @@ dependencies {
     // https://mvnrepository.com/artifact/software.amazon.awssdk/s3
     testImplementation("software.amazon.awssdk:s3:2.21.13")
 
+    implementation("io.leangen.graphql:spqr:0.12.3")
+
+    // https://mvnrepository.com/artifact/com.apollographql.federation/federation-graphql-java-support
+    implementation("com.apollographql.federation:federation-graphql-java-support:4.2.0")
+
+
 }
 
 tasks.withType<Test> {

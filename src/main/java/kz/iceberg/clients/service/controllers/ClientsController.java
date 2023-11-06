@@ -1,4 +1,4 @@
-package kz.iceberg.clients.service;
+package kz.iceberg.clients.service.controllers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
