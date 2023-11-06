@@ -4,7 +4,6 @@ import com.apollographql.federation.graphqljava.Federation;
 import com.apollographql.federation.graphqljava.tracing.FederatedTracingInstrumentation;
 import graphql.GraphQL;
 import graphql.execution.AsyncExecutionStrategy;
-import graphql.execution.instrumentation.tracing.TracingInstrumentation;
 import graphql.schema.GraphQLSchema;
 import io.leangen.graphql.GraphQLSchemaGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,13 +41,11 @@ public class GraphQLConfig {
 
     @Bean
     public GraphQlSourceBuilderCustomizer federationTransform() {
-        return builder -> {
-            builder.schemaFactory((registry, wiring)->
-                    Federation.transform(registry, wiring)
-                            .fetchEntities(env -> null)
-                            .resolveEntityType(env -> null)
-                            .build()
-            );
-        };
+        return builder -> builder.schemaFactory((registry, wiring)->
+                Federation.transform(registry, wiring)
+                        .fetchEntities(env -> null)
+                        .resolveEntityType(env -> null)
+                        .build()
+        );
     }
 }
