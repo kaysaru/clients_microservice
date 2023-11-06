@@ -26,7 +26,7 @@ public class ClientEntity {
     private Collection<ClientEmailsEntity> clientEmailsById;
     @OneToOne(mappedBy = "clientByClient")
     @JsonManagedReference
-    private ClientMoreEntity clientMoresById;
+    private ClientMoreEntity more;
     @OneToMany(mappedBy = "clientByClient")
     @JsonManagedReference
     private Collection<ClientPhonesEntity> clientPhonesById;
@@ -93,12 +93,12 @@ public class ClientEntity {
         this.clientEmailsById = clientEmailsById;
     }
 
-    public ClientMoreEntity getClientMoresById() {
-        return clientMoresById;
+    public ClientMoreEntity getMore() {
+        return more;
     }
 
-    public void setClientMoresById(ClientMoreEntity clientMoresById) {
-        this.clientMoresById = clientMoresById;
+    public void setMore(ClientMoreEntity clientMoresById) {
+        this.more = clientMoresById;
     }
 
     public Collection<ClientPhonesEntity> getClientPhonesById() {
