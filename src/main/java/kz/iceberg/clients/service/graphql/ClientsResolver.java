@@ -14,7 +14,7 @@ public class ClientsResolver {
     @Autowired
     private ClientRepository clientRepository;
     @GraphQLQuery(name = "clients")
-    public Optional<ClientEntity> lgetById(@GraphQLArgument(name = "id") Long id) {
+    public Optional<ClientEntity> getById(@GraphQLArgument(name = "id") Long id) {
         return clientRepository.findById(id);
     }
 }

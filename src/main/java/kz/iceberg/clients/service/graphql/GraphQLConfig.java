@@ -4,19 +4,20 @@ import com.apollographql.federation.graphqljava.Federation;
 import com.apollographql.federation.graphqljava.tracing.FederatedTracingInstrumentation;
 import graphql.GraphQL;
 import graphql.execution.AsyncExecutionStrategy;
+import graphql.execution.instrumentation.ChainedInstrumentation;
 import graphql.schema.GraphQLSchema;
 import io.leangen.graphql.GraphQLSchemaGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.graphql.GraphQlProperties;
 import org.springframework.boot.autoconfigure.graphql.GraphQlSourceBuilderCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.graphql.execution.GraphQlSource;
+
+import java.util.List;
 
 @Configuration
 public class GraphQLConfig {
-
-//    private final CandidateResolver candidateResolver;
-//    private final ResumeResolver resumeResolver;
-//
     @Autowired
     private ClientsResolver clientsResolver;
 
@@ -32,20 +33,49 @@ public class GraphQLConfig {
     }
 
     @Bean
-    public GraphQL getGraphQL(@Autowired GraphQLSchema graphQLSchema) {
-        return GraphQL.newGraphQL(graphQLSchema)
+    @Autowired
+    public GraphQL getGraphQL(GraphQLSchema graphQLSchema) {
+        return GraphQL
+                .newGraphQL(graphQLSchema)
+                .schema(graphQLSchema)
                 .queryExecutionStrategy(new AsyncExecutionStrategy())
                 .instrumentation(new FederatedTracingInstrumentation())
                 .build();
     }
 
+//    @Bean
+//    @Autowired
+//    public GraphQL getGraphQL(GraphQlSource graphQlSource) {
+//        return graphQlSource.graphQl();
+//    }
+
+    @Bean
+    @Autowired
+    GraphQlSource getGraphQLSource(GraphQLSchema graphQLSchema) {
+        return GraphQlSource
+                .builder(graphQLSchema)
+                .instrumentation(List.of(
+                        new FederatedTracingInstrumentation(),
+                        new ChainedInstrumentation()))
+                .build();
+    }
+
     @Bean
     public GraphQlSourceBuilderCustomizer federationTransform() {
-        return builder -> builder.schemaFactory((registry, wiring)->
-                Federation.transform(registry, wiring)
-                        .fetchEntities(env -> null)
-                        .resolveEntityType(env -> null)
-                        .build()
+        return builder -> builder.schemaFactory(
+                (registry, wiring) ->
+                        Federation.transform(registry, wiring)
+                                .fetchEntities(env -> null)
+                                .resolveEntityType(env -> null)
+                                .build()
         );
+    }
+
+    @Bean
+    public GraphQlProperties.Graphiql getGraphiQL() {
+        GraphQlProperties.Graphiql graphiql = new GraphQlProperties.Graphiql();
+        graphiql.setEnabled(true);
+        graphiql.setPath("/graphiql");
+        return graphiql;
     }
 }
