@@ -7,7 +7,6 @@ import kz.iceberg.clients.service.graphql.federation.GraphQLFederationKey;
 
 @Entity
 @Table(name = "client_emails")
-@GraphQLFederationKey
 public class ClientEmailsEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id

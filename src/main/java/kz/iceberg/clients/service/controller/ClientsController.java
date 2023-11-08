@@ -48,16 +48,4 @@ public class ClientsController {
     public String toggle(@PathVariable String id) {
         return null;
     }
-
-    private String tableNameAdapter(String columnName) {
-        return switch (columnName) {
-            case "name" -> "client_name";
-            case "phone" -> "numbers_phone";
-            case "contact" -> "company_name";
-            case "email" -> "emails_email";
-            case "address" -> "addresses_address";
-            case "notes" -> "more_notes";
-            default -> "";
-        };
-    }
 }

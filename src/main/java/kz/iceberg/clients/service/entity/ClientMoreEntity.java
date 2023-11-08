@@ -24,17 +24,17 @@ public class ClientMoreEntity {
     private String identifier;
     @OneToMany(mappedBy = "clientMoreByClientMore")
     @JsonManagedReference
-    private Collection<ClientLabelEntity> clientLabelsById;
+    private Collection<ClientLabelEntity> labels;
     @ManyToOne
     @JoinColumn(name = "company", referencedColumnName = "id")
-    private ClientCompanyEntity clientCompanyByCompany;
+    private ClientCompanyEntity company;
     @OneToOne
     @JoinColumn(name = "client", referencedColumnName = "id")
     @JsonBackReference
     private ClientEntity clientByClient;
     @OneToMany(mappedBy = "clientMoreByClientMore")
     @JsonManagedReference
-    private Collection<ClientTagEntity> clientTagsById;
+    private Collection<ClientTagEntity> tags;
 
     public long getId() {
         return id;
@@ -95,20 +95,20 @@ public class ClientMoreEntity {
         return result;
     }
 
-    public Collection<ClientLabelEntity> getClientLabelsById() {
-        return clientLabelsById;
+    public Collection<ClientLabelEntity> getLabels() {
+        return labels;
     }
 
-    public void setClientLabelsById(Collection<ClientLabelEntity> clientLabelsById) {
-        this.clientLabelsById = clientLabelsById;
+    public void setLabels(Collection<ClientLabelEntity> clientLabelsById) {
+        this.labels = clientLabelsById;
     }
 
-    public ClientCompanyEntity getClientCompanyByCompany() {
-        return clientCompanyByCompany;
+    public ClientCompanyEntity getCompany() {
+        return company;
     }
 
-    public void setClientCompanyByCompany(ClientCompanyEntity clientCompanyByCompany) {
-        this.clientCompanyByCompany = clientCompanyByCompany;
+    public void setCompany(ClientCompanyEntity clientCompanyByCompany) {
+        this.company = clientCompanyByCompany;
     }
 
     public ClientEntity getClientByClient() {
@@ -119,11 +119,11 @@ public class ClientMoreEntity {
         this.clientByClient = clientByClient;
     }
 
-    public Collection<ClientTagEntity> getClientTagsById() {
-        return clientTagsById;
+    public Collection<ClientTagEntity> getTags() {
+        return tags;
     }
 
-    public void setClientTagsById(Collection<ClientTagEntity> clientTagsById) {
-        this.clientTagsById = clientTagsById;
+    public void setTags(Collection<ClientTagEntity> clientTagsById) {
+        this.tags = clientTagsById;
     }
 }

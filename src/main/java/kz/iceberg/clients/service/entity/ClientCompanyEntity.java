@@ -17,7 +17,7 @@ public class ClientCompanyEntity {
     @Basic
     @Column(name = "bin", nullable = false)
     private long bin;
-    @OneToMany(mappedBy = "clientCompanyByCompany")
+    @OneToMany(mappedBy = "company")
     private Collection<ClientMoreEntity> clientMoresById;
 
     public long getId() {
