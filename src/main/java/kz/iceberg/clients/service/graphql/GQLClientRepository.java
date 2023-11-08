@@ -1,4 +1,4 @@
-package kz.iceberg.clients.service.repository;
+package kz.iceberg.clients.service.graphql;
 
 import kz.iceberg.clients.service.entity.ClientEntity;
 import org.springframework.data.jpa.repository.JpaRepository;

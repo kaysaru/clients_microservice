@@ -46,11 +46,14 @@ dependencies {
     implementation("com.apollographql.federation:federation-graphql-java-support:4.2.0")
     // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
     implementation("com.fasterxml.jackson.core:jackson-databind:2.15.2")
+    // https://mvnrepository.com/artifact/com.google.guava/guava
+    implementation("com.google.guava:guava:32.1.3-jre")
     // https://mvnrepository.com/artifact/org.springframework/spring-context
     implementation("org.springframework:spring-context:6.0.13")
     testImplementation("io.projectreactor:reactor-test")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.graphql:spring-graphql-test")
+
 
     //AWS SDK Parts
     // https://mvnrepository.com/artifact/software.amazon.awssdk/s3

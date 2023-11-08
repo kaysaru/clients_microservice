@@ -3,7 +3,7 @@
 //import graphql.schema.DataFetcher;
 //import kz.iceberg.clients.service.ClientService;
 //import kz.iceberg.clients.service.entity.ClientEntity;
-//import kz.iceberg.clients.service.repository.GQLClientRepository;
+//import kz.iceberg.clients.service.graphql.GQLClientRepository;
 //import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.core.SpringVersion;
 //import org.springframework.stereotype.Component;

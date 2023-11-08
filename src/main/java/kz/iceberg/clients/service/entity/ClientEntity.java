@@ -2,11 +2,23 @@ package kz.iceberg.clients.service.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import kz.iceberg.clients.service.graphql.federation.GraphQLFederationExtends;
+import kz.iceberg.clients.service.graphql.federation.GraphQLFederationExternal;
+import kz.iceberg.clients.service.graphql.federation.GraphQLFederationKey;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Collection;
 
 @Entity
 @Table(name = "client")
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
+@GraphQLFederationKey
 public class ClientEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -20,16 +32,16 @@ public class ClientEntity {
     private boolean active;
     @OneToMany(mappedBy = "clientByClient")
     @JsonManagedReference
-    private Collection<ClientAddressesEntity> clientAddressesById;
+    private Collection<ClientAddressesEntity> addresses;
     @OneToMany(mappedBy = "clientByClient")
     @JsonManagedReference
-    private Collection<ClientEmailsEntity> clientEmailsById;
+    private Collection<ClientEmailsEntity> emails;
     @OneToOne(mappedBy = "clientByClient")
     @JsonManagedReference
     private ClientMoreEntity more;
     @OneToMany(mappedBy = "clientByClient")
     @JsonManagedReference
-    private Collection<ClientPhonesEntity> clientPhonesById;
+    private Collection<ClientPhonesEntity> phones;
 
     public long getId() {
         return id;
@@ -77,20 +89,20 @@ public class ClientEntity {
         return result;
     }
 
-    public Collection<ClientAddressesEntity> getClientAddressesById() {
-        return clientAddressesById;
+    public Collection<ClientAddressesEntity> getAddresses() {
+        return addresses;
     }
 
-    public void setClientAddressesById(Collection<ClientAddressesEntity> clientAddressesById) {
-        this.clientAddressesById = clientAddressesById;
+    public void setAddresses(Collection<ClientAddressesEntity> clientAddressesById) {
+        this.addresses = clientAddressesById;
     }
 
-    public Collection<ClientEmailsEntity> getClientEmailsById() {
-        return clientEmailsById;
+    public Collection<ClientEmailsEntity> getEmails() {
+        return emails;
     }
 
-    public void setClientEmailsById(Collection<ClientEmailsEntity> clientEmailsById) {
-        this.clientEmailsById = clientEmailsById;
+    public void setEmails(Collection<ClientEmailsEntity> clientEmailsById) {
+        this.emails = clientEmailsById;
     }
 
     public ClientMoreEntity getMore() {
@@ -101,11 +113,11 @@ public class ClientEntity {
         this.more = clientMoresById;
     }
 
-    public Collection<ClientPhonesEntity> getClientPhonesById() {
-        return clientPhonesById;
+    public Collection<ClientPhonesEntity> getPhones() {
+        return phones;
     }
 
-    public void setClientPhonesById(Collection<ClientPhonesEntity> clientPhonesById) {
-        this.clientPhonesById = clientPhonesById;
+    public void setPhones(Collection<ClientPhonesEntity> clientPhonesById) {
+        this.phones = clientPhonesById;
     }
 }

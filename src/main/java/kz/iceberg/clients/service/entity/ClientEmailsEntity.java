@@ -2,9 +2,12 @@ package kz.iceberg.clients.service.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+import kz.iceberg.clients.service.graphql.federation.GraphQLFederationExternal;
+import kz.iceberg.clients.service.graphql.federation.GraphQLFederationKey;
 
 @Entity
 @Table(name = "client_emails")
+@GraphQLFederationKey
 public class ClientEmailsEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
