@@ -12,7 +12,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,9 +24,8 @@ public class ClientService {
 
     }
 
-    public boolean add(ClientEntity client) {
-        this.clientRepository.save(client);
-        return true;
+    public Optional<ClientEntity> add(ClientEntity client) {
+        return Optional.of(this.clientRepository.save(client));
     }
 
     @Transactional
@@ -37,10 +35,10 @@ public class ClientService {
 
     @Transactional
     public Optional<List<ClientEntity>> list(FilterWrapper filter) {
-        String search = "%" + filter.getSearch() + "%";
+        String search = filter.getSearch();
 
         LoggerFactory.getLogger(ClientService.class).info(filter.tableNameAdapter(search.trim().toLowerCase()));
-        Sort sort = Sort.by( filter.tableNameAdapter(filter.getSort().getColumnName()) );
+        Sort sort = Sort.by(filter.tableNameAdapter(filter.getSort().getColumnName()));
 
         if (filter.getSort().getOrder().equals(Ascension.ASC))
             sort = sort.ascending();
@@ -53,11 +51,23 @@ public class ClientService {
                 sort
         );
 
-        return Optional.ofNullable(clientRepository.findByNameIsLikeIgnoreCaseOrEmailsEmailIsLikeIgnoreCaseOrAddressesAddressIsLikeIgnoreCaseOrPhonesPhoneIsLikeIgnoreCase(search, search, search, search, pageable));
+        return Optional.ofNullable(clientRepository.findByNameContainingIgnoreCaseOrEmailsEmailContainingIgnoreCaseOrAddressesAddressContainingIgnoreCaseOrPhonesPhoneContainingIgnoreCase(search, search, search, search, pageable));
     }
 
     @Transactional
     public ClientEntity update(ClientEntity client) {
-        return this.clientRepository.save(client);
+        try {
+            throw new NoSuchMethodException();
+        } catch (NoSuchMethodException e) {
+            throw new RuntimeException(e);
+        }
+        //TODO implement update
+        // return this.clientRepository.save(client);
+    }
+
+    @Transactional
+    public boolean delete(Long id) {
+        this.clientRepository.deleteById(id);
+        return true;
     }
 }

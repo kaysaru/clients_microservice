@@ -1,13 +1,10 @@
 package kz.iceberg.clients.service.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import kz.iceberg.clients.service.ClientService;
 import kz.iceberg.clients.service.entity.ClientEntity;
 import kz.iceberg.clients.service.wrapper.FilterWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,8 +23,8 @@ public class ClientsController {
     }
 
     @GetMapping(path = "/{id}", produces = "application/json")
-    public ClientEntity get(@PathVariable("id") Integer id) {
-        return clientService.retrieve(Long.valueOf(id)).orElseThrow();
+    public ClientEntity get(@PathVariable("id") Long id) {
+        return clientService.retrieve(id).orElseThrow();
 //        ObjectMapper objectMapper = new ObjectMapper();
 //        String json;
 //        try {
@@ -53,7 +50,8 @@ public class ClientsController {
     }
 
     @PatchMapping(path = "/{id}", produces = "application/json")
-    public String toggle(@PathVariable String id) {
-        return null;
+    public ResponseEntity<String> toggle(@PathVariable Long id) {
+        clientService.delete(id);
+        return new ResponseEntity<String>("deleted", HttpStatus.OK);
     }
 }

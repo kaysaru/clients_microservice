@@ -33,4 +33,21 @@ public class ClientsResolver {
         filter.setSort(sort);
         return service.list(filter);
     }
+
+
+    @GraphQLQuery(name = "updateClient")
+    public Optional<ClientEntity> update(@GraphQLArgument(name = "client") ClientEntity entity) {
+        return Optional.ofNullable(service.update(entity));
+    }
+
+    @GraphQLQuery(name = "deleteClient")
+    public Optional<Boolean> delete(@GraphQLArgument(name = "id") Long id) {
+        service.delete(id);
+        return Optional.of(true);
+    }
+
+    @GraphQLQuery(name = "createClient")
+    public Optional<ClientEntity> create(@GraphQLArgument(name = "client") ClientEntity entity) {
+        return service.add(entity);
+    }
 }
