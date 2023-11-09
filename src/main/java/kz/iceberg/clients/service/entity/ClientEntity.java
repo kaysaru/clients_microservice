@@ -18,23 +18,23 @@ public class ClientEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id", nullable = false)
-    private long id;
+    private Long id;
     @Basic
     @Column(name = "name", nullable = false, length = 255)
     private String name;
     @Basic
     @Column(name = "active", nullable = false)
     private boolean active;
-    @OneToMany(mappedBy = "client")
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private Collection<ClientAddressesEntity> addresses;
-    @OneToMany(mappedBy = "client")
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private Collection<ClientEmailsEntity> emails;
-    @OneToOne(mappedBy = "client")
+    @OneToOne(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private ClientMoreEntity more;
-    @OneToMany(mappedBy = "client")
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private Collection<ClientPhonesEntity> phones;
 

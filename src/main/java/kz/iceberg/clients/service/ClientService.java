@@ -1,8 +1,8 @@
 package kz.iceberg.clients.service;
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import kz.iceberg.clients.service.entity.ClientEntity;
-import kz.iceberg.clients.service.graphql.GraphQLController;
 import kz.iceberg.clients.service.repository.ClientRepository;
 import kz.iceberg.clients.service.wrapper.FilterWrapper;
 import kz.iceberg.clients.service.wrapper.enums.Ascension;
@@ -12,9 +12,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.logging.Logger;
 
 @Service
 public class ClientService {
@@ -32,34 +32,32 @@ public class ClientService {
 
     @Transactional
     public Optional<ClientEntity> retrieve(Long id) {
-        return Optional.of(clientRepository.findById(id).orElseThrow());
+        return Optional.of(clientRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Client not found")));
     }
 
     @Transactional
     public Optional<List<ClientEntity>> list(FilterWrapper filter) {
-        String search = filter.getSearch();
+        String search = "%" + filter.getSearch() + "%";
 
-        LoggerFactory.getLogger(ClientService.class).info(filter.tableNameAdapter(search));
-        Sort sort = Sort.by( filter.tableNameAdapter(filter.getSort().getKey()) );
+        LoggerFactory.getLogger(ClientService.class).info(filter.tableNameAdapter(search.trim().toLowerCase()));
+        Sort sort = Sort.by( filter.tableNameAdapter(filter.getSort().getColumnName()) );
 
-        if (filter.getSort().getValue().equals(Ascension.ASC))
+        if (filter.getSort().getOrder().equals(Ascension.ASC))
             sort = sort.ascending();
-        else if (filter.getSort().getValue().equals(Ascension.DESC))
+        else if (filter.getSort().getOrder().equals(Ascension.DESC))
             sort = sort.descending();
 
         Pageable pageable = PageRequest.of(
-                filter.getPagination().getKey(),
-                filter.getPagination().getValue(),
+                filter.getPagination().getOffset(),
+                filter.getPagination().getLimit(),
                 sort
         );
 
-        var list = clientRepository.findByNameOrEmails_emailOrAddresses_addressOrPhones_phone(search, search, search, search,
-                pageable);
-        return Optional.of(list);
+        return Optional.ofNullable(clientRepository.findByNameIsLikeIgnoreCaseOrEmailsEmailIsLikeIgnoreCaseOrAddressesAddressIsLikeIgnoreCaseOrPhonesPhoneIsLikeIgnoreCase(search, search, search, search, pageable));
     }
 
     @Transactional
-    public void update(ClientEntity client) {
-        this.clientRepository.save(client);
+    public ClientEntity update(ClientEntity client) {
+        return this.clientRepository.save(client);
     }
 }

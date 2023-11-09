@@ -22,7 +22,7 @@ public class ClientMoreEntity {
     @Basic
     @Column(name = "identifier", nullable = false, length = 60)
     private String identifier;
-    @OneToMany(mappedBy = "clientMoreByClientMore")
+    @OneToMany(mappedBy = "clientMoreByClientMore", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private Collection<ClientLabelEntity> labels;
     @ManyToOne
@@ -32,7 +32,7 @@ public class ClientMoreEntity {
     @JoinColumn(name = "client", referencedColumnName = "id")
     @JsonBackReference
     private ClientEntity client;
-    @OneToMany(mappedBy = "clientMoreByClientMore")
+    @OneToMany(mappedBy = "clientMoreByClientMore", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private Collection<ClientTagEntity> tags;
 

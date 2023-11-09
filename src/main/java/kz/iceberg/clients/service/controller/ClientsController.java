@@ -12,18 +12,22 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("clients")
 public class ClientsController {
-    @Autowired
-    ClientService clientService;
     private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
-//    @GetMapping(path = "/{id}", produces = "application/json")
-//    public String get() {
-//        List<ClientEntity> clients  = clientService.findAllById(List.of(36L, 37L));
+    ClientService clientService;
+
+    ClientsController(ClientService service) {
+        this.clientService = service;
+    }
+
+    @GetMapping(path = "/{id}", produces = "application/json")
+    public ClientEntity get(@PathVariable("id") Integer id) {
+        return clientService.retrieve(Long.valueOf(id)).orElseThrow();
 //        ObjectMapper objectMapper = new ObjectMapper();
 //        String json;
 //        try {
@@ -32,16 +36,20 @@ public class ClientsController {
 //            throw new RuntimeException(e);
 //        }
 //        return json;
-//    }
+    }
 
     @PostMapping(path = "/new", produces = "application/json")
-    public ResponseEntity<List<ClientEntity>> getList(@RequestBody FilterWrapper filter) {
-        return new ResponseEntity<>(clientService.list(filter).orElse(List.of()), HttpStatus.OK);
+    public ResponseEntity<Optional<List<ClientEntity>>> getList(@RequestBody FilterWrapper filter) {
+        return new ResponseEntity<>(clientService.list(filter), HttpStatus.OK);
     }
 
     @PutMapping(path = "/{id}", produces = "application/json")
-    public ResponseEntity<String> update(@PathVariable String id) {
-        return null;
+    public ResponseEntity<String> update(@RequestBody ClientEntity entity) {
+        if(entity.getId() == null) {
+            throw new IllegalStateException("id is null");
+        }
+        clientService.update(entity);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PatchMapping(path = "/{id}", produces = "application/json")
