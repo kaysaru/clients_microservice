@@ -1,5 +1,6 @@
 package kz.iceberg.clients.service;
 
+import kz.iceberg.clients.service.wrapper.FilterWrapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -11,6 +12,8 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -91,6 +94,16 @@ class ClientsServiceJavaApplicationTests {
             System.out.println(pair.first + "ms --- " + pair.second + " ms");
         });
         System.out.println("Time taken for both requests: " + durationInMillis + " ms");
+    }
+
+    @Test
+    public void testSwitch() {
+        var a = new FilterWrapper();
+        String columnName = "name";
+        String res = a.tableNameAdapter(columnName);
+
+        System.out.println(res);
+        assertThat(res).isEqualTo("client_name");
     }
 
     class Pair<T1, T2> {

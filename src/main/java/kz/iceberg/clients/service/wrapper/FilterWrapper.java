@@ -1,10 +1,7 @@
 package kz.iceberg.clients.service.wrapper;
 
 import com.google.common.collect.ImmutableTable;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import kz.iceberg.clients.service.wrapper.enums.Subject;
 import kz.iceberg.clients.service.wrapper.enums.Ascension;
 
@@ -15,6 +12,7 @@ import java.util.Map.Entry;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class FilterWrapper {
     private List<Integer> ids;
     private Entry<Integer, Integer> pagination;
@@ -30,7 +28,7 @@ public class FilterWrapper {
             case "email" -> "emails_email";
             case "address" -> "addresses_address";
             case "notes" -> "more_notes";
-            default -> "";
+            default -> "123";
         };
     }
 }

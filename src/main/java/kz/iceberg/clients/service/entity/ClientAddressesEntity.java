@@ -22,7 +22,7 @@ public class ClientAddressesEntity {
     @ManyToOne
     @JoinColumn(name = "client", referencedColumnName = "id")
     @JsonBackReference
-    private ClientEntity clientByClient;
+    private ClientEntity client;
 
     public long getId() {
         return id;
@@ -80,11 +80,11 @@ public class ClientAddressesEntity {
         return result;
     }
 
-    public ClientEntity getClientByClient() {
-        return clientByClient;
+    public ClientEntity getClient() {
+        return client;
     }
 
-    public void setClientByClient(ClientEntity clientByClient) {
-        this.clientByClient = clientByClient;
+    public void setClient(ClientEntity clientByClient) {
+        this.client = clientByClient;
     }
 }

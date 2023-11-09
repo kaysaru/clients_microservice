@@ -31,7 +31,7 @@ public class ClientMoreEntity {
     @OneToOne
     @JoinColumn(name = "client", referencedColumnName = "id")
     @JsonBackReference
-    private ClientEntity clientByClient;
+    private ClientEntity client;
     @OneToMany(mappedBy = "clientMoreByClientMore")
     @JsonManagedReference
     private Collection<ClientTagEntity> tags;
@@ -111,12 +111,12 @@ public class ClientMoreEntity {
         this.company = clientCompanyByCompany;
     }
 
-    public ClientEntity getClientByClient() {
-        return clientByClient;
+    public ClientEntity getClient() {
+        return client;
     }
 
-    public void setClientByClient(ClientEntity clientByClient) {
-        this.clientByClient = clientByClient;
+    public void setClient(ClientEntity clientByClient) {
+        this.client = clientByClient;
     }
 
     public Collection<ClientTagEntity> getTags() {

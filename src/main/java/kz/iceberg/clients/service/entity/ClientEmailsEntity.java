@@ -2,8 +2,6 @@ package kz.iceberg.clients.service.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-import kz.iceberg.clients.service.graphql.federation.GraphQLFederationExternal;
-import kz.iceberg.clients.service.graphql.federation.GraphQLFederationKey;
 
 @Entity
 @Table(name = "client_emails")
@@ -21,7 +19,7 @@ public class ClientEmailsEntity {
     @ManyToOne
     @JoinColumn(name = "client", referencedColumnName = "id")
     @JsonBackReference
-    private ClientEntity clientByClient;
+    private ClientEntity client;
 
     public long getId() {
         return id;
@@ -69,11 +67,11 @@ public class ClientEmailsEntity {
         return result;
     }
 
-    public ClientEntity getClientByClient() {
-        return clientByClient;
+    public ClientEntity getClient() {
+        return client;
     }
 
-    public void setClientByClient(ClientEntity clientByClient) {
-        this.clientByClient = clientByClient;
+    public void setClient(ClientEntity clientByClient) {
+        this.client = clientByClient;
     }
 }

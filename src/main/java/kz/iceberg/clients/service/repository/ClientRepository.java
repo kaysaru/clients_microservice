@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface ClientRepository extends JpaRepository<ClientEntity, Long> {
-    List<ClientEntity> findByNameOrEmails_emailOrAddresses_AddressOrPhones_Phone(
+    List<ClientEntity> findByNameOrEmails_emailOrAddresses_addressOrPhones_phone(
             String name,
             String emails_email,
             String addresses_address,

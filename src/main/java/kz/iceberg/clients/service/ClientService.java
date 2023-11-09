@@ -2,9 +2,11 @@ package kz.iceberg.clients.service;
 
 import jakarta.transaction.Transactional;
 import kz.iceberg.clients.service.entity.ClientEntity;
+import kz.iceberg.clients.service.graphql.GraphQLController;
 import kz.iceberg.clients.service.repository.ClientRepository;
 import kz.iceberg.clients.service.wrapper.FilterWrapper;
 import kz.iceberg.clients.service.wrapper.enums.Ascension;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Logger;
 
 @Service
 public class ClientService {
@@ -34,12 +37,11 @@ public class ClientService {
 
     @Transactional
     public Optional<List<ClientEntity>> list(FilterWrapper filter) {
-        ClientEntity entity = ClientEntity.builder()
-                .name(filter.getSearch())
-                .build();
         String search = filter.getSearch();
 
-        Sort sort = Sort.by(filter.tableNameAdapter(filter.getSort().getKey()));
+        LoggerFactory.getLogger(ClientService.class).info(filter.tableNameAdapter(search));
+        Sort sort = Sort.by( filter.tableNameAdapter(filter.getSort().getKey()) );
+
         if (filter.getSort().getValue().equals(Ascension.ASC))
             sort = sort.ascending();
         else if (filter.getSort().getValue().equals(Ascension.DESC))
@@ -51,9 +53,7 @@ public class ClientService {
                 sort
         );
 
-
-
-        var list = clientRepository.findByNameOrEmails_emailOrAddresses_AddressOrPhones_Phone(search, search, search, search,
+        var list = clientRepository.findByNameOrEmails_emailOrAddresses_addressOrPhones_phone(search, search, search, search,
                 pageable);
         return Optional.of(list);
     }
