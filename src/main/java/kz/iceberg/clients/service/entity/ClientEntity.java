@@ -12,8 +12,6 @@ import java.util.Collection;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
-@GraphQLFederationKey
 public class ClientEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
