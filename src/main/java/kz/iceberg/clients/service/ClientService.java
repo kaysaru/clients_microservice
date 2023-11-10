@@ -3,7 +3,9 @@ package kz.iceberg.clients.service;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import kz.iceberg.clients.service.entity.ClientEntity;
+import kz.iceberg.clients.service.entity.dto.ClientEntityDto;
 import kz.iceberg.clients.service.repository.ClientRepository;
+import kz.iceberg.clients.service.service.ClientEntityMapper;
 import kz.iceberg.clients.service.wrapper.FilterWrapper;
 import kz.iceberg.clients.service.wrapper.enums.Ascension;
 import org.slf4j.LoggerFactory;
@@ -18,10 +20,11 @@ import java.util.Optional;
 @Service
 public class ClientService {
     private final ClientRepository clientRepository;
+    private final ClientEntityMapper mapper;
 
-    ClientService(final ClientRepository clientRepository) {
+    ClientService(final ClientRepository clientRepository, ClientEntityMapper mapper) {
         this.clientRepository = clientRepository;
-
+        this.mapper = mapper;
     }
 
     public Optional<ClientEntity> add(ClientEntity client) {
@@ -55,14 +58,13 @@ public class ClientService {
     }
 
     @Transactional
-    public ClientEntity update(ClientEntity client) {
-        try {
-            throw new NoSuchMethodException();
-        } catch (NoSuchMethodException e) {
-            throw new RuntimeException(e);
-        }
-        //TODO implement update
-        // return this.clientRepository.save(client);
+    public Optional<ClientEntity> update(ClientEntityDto client) {
+        Optional<ClientEntity> entity = this.clientRepository.findById(client.getId());
+        entity.ifPresent(clientEntity -> {
+            mapper.partialUpdate(client, clientEntity);
+            this.clientRepository.save(clientEntity);
+        });
+        return entity;
     }
 
     @Transactional

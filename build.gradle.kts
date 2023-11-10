@@ -1,3 +1,5 @@
+import org.gradle.api.plugins.internal.JvmPluginsHelper
+
 plugins {
     java
     id("org.springframework.boot") version "3.1.5"
@@ -5,6 +7,7 @@ plugins {
     id("com.google.protobuf") version "0.9.4"
     // Generate IntelliJ IDEA's .idea & .iml project files
     id("idea")
+//    JvmPluginsHelper.configureAnnotationProcessorPath("org.mapstruct:mapstruct-processor:1.5.5.Final")
 }
 
 group = "kz.iceberg"
@@ -50,6 +53,11 @@ dependencies {
     implementation("com.google.guava:guava:32.1.3-jre")
     // https://mvnrepository.com/artifact/org.springframework/spring-context
     implementation("org.springframework:spring-context:6.0.13")
+    // https://mvnrepository.com/artifact/org.mapstruct/mapstruct
+    implementation("org.mapstruct:mapstruct:1.5.5.Final")
+    // https://mvnrepository.com/artifact/org.mapstruct/mapstruct-processor
+    annotationProcessor("org.mapstruct:mapstruct-processor:1.5.5.Final")
+
     testImplementation("io.projectreactor:reactor-test")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.graphql:spring-graphql-test")
@@ -66,6 +74,7 @@ dependencies {
     implementation("io.grpc:grpc-stub:${grpcVersion}")
     runtimeOnly("io.grpc:grpc-netty-shaded:${grpcVersion}")
     compileOnly("org.apache.tomcat:annotations-api:6.0.53") // necessary for Java 9+
+
 }
 
 tasks.withType<Test> {

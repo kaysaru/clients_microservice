@@ -1,13 +1,14 @@
 package kz.iceberg.clients.service.graphql;
 
 import io.leangen.graphql.annotations.GraphQLArgument;
+import io.leangen.graphql.annotations.GraphQLMutation;
 import io.leangen.graphql.annotations.GraphQLQuery;
 import kz.iceberg.clients.service.ClientService;
 import kz.iceberg.clients.service.entity.ClientEntity;
+import kz.iceberg.clients.service.entity.dto.ClientEntityDto;
 import kz.iceberg.clients.service.graphql.input.PaginationEntry;
 import kz.iceberg.clients.service.graphql.input.SortEntry;
 import kz.iceberg.clients.service.wrapper.FilterWrapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,8 +16,11 @@ import java.util.Optional;
 
 @Service
 public class ClientsResolver {
-    @Autowired
-    private ClientService service;
+    private final ClientService service;
+
+    ClientsResolver(ClientService service) {
+        this.service = service;
+    }
 
     @GraphQLQuery(name = "clients")
     public Optional<ClientEntity> getById(@GraphQLArgument(name = "id") Long id) {
@@ -35,18 +39,19 @@ public class ClientsResolver {
     }
 
 
-    @GraphQLQuery(name = "updateClient")
-    public Optional<ClientEntity> update(@GraphQLArgument(name = "client") ClientEntity entity) {
-        return Optional.ofNullable(service.update(entity));
+    @GraphQLMutation(name = "updateClient")
+    public Optional<ClientEntity> update(@GraphQLArgument(name = "client") ClientEntityDto entity) {
+        System.out.println(entity);
+        return service.update(entity);
     }
 
-    @GraphQLQuery(name = "deleteClient")
+    @GraphQLMutation(name = "deleteClient")
     public Optional<Boolean> delete(@GraphQLArgument(name = "id") Long id) {
         service.delete(id);
         return Optional.of(true);
     }
 
-    @GraphQLQuery(name = "createClient")
+    @GraphQLMutation(name = "createClient")
     public Optional<ClientEntity> create(@GraphQLArgument(name = "client") ClientEntity entity) {
         return service.add(entity);
     }
