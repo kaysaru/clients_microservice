@@ -1,12 +1,11 @@
 package kz.iceberg.clients.service.repository;
 
+import jakarta.transaction.Transactional;
 import kz.iceberg.clients.service.entity.ClientEntity;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.scheduling.annotation.Async;
 
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 
 public interface ClientRepository extends JpaRepository<ClientEntity, Long> {
     /**
@@ -29,13 +28,14 @@ public interface ClientRepository extends JpaRepository<ClientEntity, Long> {
      * offset<br>
      * 0 limit 5</code>
      *
-     * @param name
-     * @param emails_email
-     * @param addresses_address
-     * @param phones_phone
-     * @param pageable
+     * @param name will search for name
+     * @param emails_email will search for email
+     * @param addresses_address will search for addresses
+     * @param phones_phone will search for phones
+     * @param pageable Pageable instance for sorting and paging
      * @return <ClientEntity>List of ClientEntity</ClientEntity>
      */
+    @Transactional
     List<ClientEntity> findByNameContainingIgnoreCaseOrEmailsEmailContainingIgnoreCaseOrAddressesAddressContainingIgnoreCaseOrPhonesPhoneContainingIgnoreCase(
             String name,
             String emails_email,

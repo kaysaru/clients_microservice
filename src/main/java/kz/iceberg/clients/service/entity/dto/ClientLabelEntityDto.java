@@ -1,7 +1,6 @@
 package kz.iceberg.clients.service.entity.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import kz.iceberg.clients.service.entity.ClientLabelEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,7 +9,7 @@ import lombok.experimental.Accessors;
 import java.io.Serializable;
 
 /**
- * DTO for {@link ClientLabelEntity}
+ * DTO for {@link kz.iceberg.clients.service.entity.ClientLabelEntity}
  */
 @Data
 @AllArgsConstructor

@@ -12,7 +12,7 @@ import java.util.Collection;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@ToString
 @GraphQLFederationKey
 public class ClientEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -58,5 +58,67 @@ public class ClientEntity {
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (active ? 1 : 0);
         return result;
+    }
+
+    public <T> void concatLists(Collection<T> target, Collection<T> source) {
+        for(T el : source) {
+            target.add(el);
+        }
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public Collection<ClientAddressesEntity> getAddresses() {
+        return addresses;
+    }
+
+    public void setAddresses(Collection<ClientAddressesEntity> addresses) {
+        this.addresses = addresses;
+    }
+
+    public Collection<ClientEmailsEntity> getEmails() {
+        return emails;
+    }
+
+    public void setEmails(Collection<ClientEmailsEntity> emails) {
+        this.emails = emails;
+    }
+
+    public ClientMoreEntity getMore() {
+        return more;
+    }
+
+    public void setMore(ClientMoreEntity more) {
+        this.more = more;
+    }
+
+    public Collection<ClientPhonesEntity> getPhones() {
+        return phones;
+    }
+
+    public void setPhones(Collection<ClientPhonesEntity> phones) {
+        this.phones = phones;
     }
 }

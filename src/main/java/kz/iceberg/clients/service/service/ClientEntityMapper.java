@@ -1,8 +1,8 @@
 package kz.iceberg.clients.service.service;
 
 import kz.iceberg.clients.service.entity.ClientEntity;
-import kz.iceberg.clients.service.entity.dto.ClientEntityDto;
 import kz.iceberg.clients.service.entity.ClientMoreEntity;
+import kz.iceberg.clients.service.entity.dto.ClientEntityDto;
 import org.mapstruct.*;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING)

@@ -25,7 +25,7 @@ public class ClientTagEntity {
     @Basic
     @Column(name = "insolvent", nullable = false)
     private boolean insolvent;
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "client_more", referencedColumnName = "id")
     @JsonBackReference
     private ClientMoreEntity clientMoreByClientMore;

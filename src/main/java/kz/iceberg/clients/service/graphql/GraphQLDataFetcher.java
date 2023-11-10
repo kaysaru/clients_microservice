@@ -1,7 +1,7 @@
 //package kz.iceberg.clients.service.graphql;
 //
 //import graphql.schema.DataFetcher;
-//import kz.iceberg.clients.service.ClientService;
+//import kz.iceberg.clients.service.service.ClientService;
 //import kz.iceberg.clients.service.entity.ClientEntity;
 //import kz.iceberg.clients.service.graphql.GQLClientRepository;
 //import org.springframework.beans.factory.annotation.Autowired;

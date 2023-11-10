@@ -24,12 +24,14 @@ import java.util.stream.Collectors;
 public class GraphQLConfig {
     @Autowired
     private ClientsResolver clientsResolver;
+    @Autowired
+    private MergeResolver mergeResolver;
 
     @Bean
     public GraphQLSchema getGraphQLSchema() {
         GraphQLSchema schema = new GraphQLSchemaGenerator()
                 .withBasePackages("kz.iceberg.clients.service.entity")
-                .withOperationsFromSingletons(clientsResolver)
+                .withOperationsFromSingletons(clientsResolver, mergeResolver)
                 .generate();
         // TODO add apollo federation from https://github.com/setchy/graphql-java-kickstart-federation-example/tree/master
 //        return schema;

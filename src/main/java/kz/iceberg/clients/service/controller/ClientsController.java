@@ -1,6 +1,6 @@
 package kz.iceberg.clients.service.controller;
 
-import kz.iceberg.clients.service.ClientService;
+import kz.iceberg.clients.service.service.ClientService;
 import kz.iceberg.clients.service.entity.ClientEntity;
 import kz.iceberg.clients.service.entity.dto.ClientEntityDto;
 import kz.iceberg.clients.service.wrapper.FilterWrapper;
@@ -54,6 +54,6 @@ public class ClientsController {
     @PatchMapping(path = "/{id}", produces = "application/json")
     public ResponseEntity<String> toggle(@PathVariable Long id) {
         clientService.delete(id);
-        return new ResponseEntity<String>("deleted", HttpStatus.OK);
+        return new ResponseEntity<>("deleted", HttpStatus.OK);
     }
 }

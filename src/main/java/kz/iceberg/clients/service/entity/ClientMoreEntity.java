@@ -3,10 +3,12 @@ package kz.iceberg.clients.service.entity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.util.Collection;
 
 @Entity
+@Data
 @Table(name = "client_more")
 public class ClientMoreEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,9 +24,9 @@ public class ClientMoreEntity {
     @Basic
     @Column(name = "identifier", nullable = false, length = 60)
     private String identifier;
-    @OneToMany(mappedBy = "clientMoreByClientMore", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(mappedBy = "clientMoreByClientMore", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
-    private Collection<ClientLabelEntity> labels;
+    private ClientLabelEntity labels;
     @ManyToOne
     @JoinColumn(name = "company", referencedColumnName = "id")
     private ClientCompanyEntity company;
@@ -32,41 +34,9 @@ public class ClientMoreEntity {
     @JoinColumn(name = "client", referencedColumnName = "id")
     @JsonBackReference
     private ClientEntity client;
-    @OneToMany(mappedBy = "clientMoreByClientMore", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(mappedBy = "clientMoreByClientMore", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
-    private Collection<ClientTagEntity> tags;
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getNotes() {
-        return notes;
-    }
-
-    public void setNotes(String notes) {
-        this.notes = notes;
-    }
-
-    public double getRate() {
-        return rate;
-    }
-
-    public void setRate(double rate) {
-        this.rate = rate;
-    }
-
-    public String getIdentifier() {
-        return identifier;
-    }
-
-    public void setIdentifier(String identifier) {
-        this.identifier = identifier;
-    }
+    private ClientTagEntity tags;
 
     @Override
     public boolean equals(Object o) {
@@ -93,37 +63,5 @@ public class ClientMoreEntity {
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         result = 31 * result + (identifier != null ? identifier.hashCode() : 0);
         return result;
-    }
-
-    public Collection<ClientLabelEntity> getLabels() {
-        return labels;
-    }
-
-    public void setLabels(Collection<ClientLabelEntity> clientLabelsById) {
-        this.labels = clientLabelsById;
-    }
-
-    public ClientCompanyEntity getCompany() {
-        return company;
-    }
-
-    public void setCompany(ClientCompanyEntity clientCompanyByCompany) {
-        this.company = clientCompanyByCompany;
-    }
-
-    public ClientEntity getClient() {
-        return client;
-    }
-
-    public void setClient(ClientEntity clientByClient) {
-        this.client = clientByClient;
-    }
-
-    public Collection<ClientTagEntity> getTags() {
-        return tags;
-    }
-
-    public void setTags(Collection<ClientTagEntity> clientTagsById) {
-        this.tags = clientTagsById;
     }
 }

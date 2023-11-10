@@ -1,17 +1,15 @@
 package kz.iceberg.clients.service.entity.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import kz.iceberg.clients.service.entity.ClientMoreEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
-import java.util.Collection;
 
 /**
- * DTO for {@link ClientMoreEntity}
+ * DTO for {@link kz.iceberg.clients.service.entity.ClientMoreEntity}
  */
 @Data
 @AllArgsConstructor
@@ -23,7 +21,7 @@ public class ClientMoreEntityDto implements Serializable {
     private String notes;
     private double rate;
     private String identifier;
-    private Collection<ClientLabelEntityDto> labels;
+    private ClientLabelEntityDto labels;
     private ClientCompanyEntityDto company;
-    private Collection<ClientTagEntityDto> tags;
+    private ClientTagEntityDto tags;
 }

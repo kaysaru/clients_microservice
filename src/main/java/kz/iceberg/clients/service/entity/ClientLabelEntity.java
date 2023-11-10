@@ -19,7 +19,7 @@ public class ClientLabelEntity {
     @Basic
     @Column(name = "ban", nullable = false)
     private boolean ban;
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "client_more", referencedColumnName = "id")
     @JsonBackReference
     private ClientMoreEntity clientMoreByClientMore;
