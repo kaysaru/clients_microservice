@@ -1,8 +1,8 @@
 package kz.iceberg.clients.service.controller;
 
-import kz.iceberg.clients.service.service.ClientService;
 import kz.iceberg.clients.service.entity.ClientEntity;
 import kz.iceberg.clients.service.entity.dto.ClientEntityDto;
+import kz.iceberg.clients.service.service.ClientService;
 import kz.iceberg.clients.service.wrapper.FilterWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,7 +36,7 @@ public class ClientsController {
     @PostMapping(path = "/new", produces = "application/json")
     public ResponseEntity<String> create(@RequestBody ClientEntity client) {
         var res = this.clientService.add(client);
-        if(res.isEmpty()) {
+        if (res.isEmpty()) {
             return new ResponseEntity<>("An Error Occured.", HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>("OK", HttpStatus.OK);
@@ -44,7 +44,7 @@ public class ClientsController {
 
     @PutMapping(path = "/{id}", produces = "application/json")
     public ResponseEntity<String> update(@RequestBody ClientEntityDto entity) {
-        if(entity.getId() == null) {
+        if (entity.getId() == null) {
             throw new IllegalStateException("id is null");
         }
         clientService.update(entity);

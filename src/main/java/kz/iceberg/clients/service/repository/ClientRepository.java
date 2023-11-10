@@ -28,11 +28,11 @@ public interface ClientRepository extends JpaRepository<ClientEntity, Long> {
      * offset<br>
      * 0 limit 5</code>
      *
-     * @param name will search for name
-     * @param emails_email will search for email
+     * @param name              will search for name
+     * @param emails_email      will search for email
      * @param addresses_address will search for addresses
-     * @param phones_phone will search for phones
-     * @param pageable Pageable instance for sorting and paging
+     * @param phones_phone      will search for phones
+     * @param pageable          Pageable instance for sorting and paging
      * @return <ClientEntity>List of ClientEntity</ClientEntity>
      */
     @Transactional

@@ -1,7 +1,8 @@
 package kz.iceberg.clients.service.service;
 
 import jakarta.transaction.Transactional;
-import kz.iceberg.clients.service.entity.*;
+import kz.iceberg.clients.service.entity.ClientEntity;
+import kz.iceberg.clients.service.entity.TimelineEntity;
 import kz.iceberg.clients.service.entity.dto.ClientEntityDto;
 import kz.iceberg.clients.service.entity.dto.ClientLabelEntityDto;
 import kz.iceberg.clients.service.entity.dto.ClientTagEntityDto;
@@ -16,9 +17,6 @@ import java.math.RoundingMode;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
-
-import static org.mockito.Mockito.mock;
 
 @Service
 public class MergeService {
@@ -45,7 +43,7 @@ public class MergeService {
 
         var targetDto = mapper.toDto(target);
         List<ClientEntityDto> sourceEntitiesDto = new ArrayList<>();
-        for(ClientEntity s : sourceEntities) {
+        for (ClientEntity s : sourceEntities) {
             var a = mapper.toDto(s);
             sourceEntitiesDto.add(a);
         }
@@ -58,6 +56,7 @@ public class MergeService {
         }
         generateTimelines(target, sourceEntities);
         clientRepository.save(target);
+        clientRepository.flush();
         return true;
     }
 
@@ -84,7 +83,7 @@ public class MergeService {
     }
 
     /**
-     * In-place merge
+     * In-place merge, it will detach array elements from their parents and attach them to target
      */
     private ClientEntityDto merge(ClientEntityDto target, List<ClientEntityDto> sourceClients) {
 //        if (target.getMore() == null && sourceClients.stream().anyMatch(e -> e.getMore() != null)) {
